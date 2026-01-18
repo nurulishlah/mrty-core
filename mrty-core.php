@@ -3,7 +3,7 @@
  * Plugin Name: MRTY Core
  * Description: Core functionality for MRTY website (CPTs, Taxonomies, Shortcodes).
  * Version: 1.0.0
- * Author: Antigravity
+ * Author: Muhamad Ishlah
  * Text Domain: mrty-core
  */
 
