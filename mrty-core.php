@@ -25,5 +25,8 @@ if (is_admin()) {
     require_once MRTY_CORE_PATH . 'inc/admin-settings.php';
 }
 
+// Load Blocks
+require_once MRTY_CORE_PATH . 'inc/blocks.php';
+
 // Load Shortcodes
 require_once MRTY_CORE_PATH . 'inc/shortcodes.php';
