@@ -74,3 +74,12 @@ add_shortcode('mrty_phone', function () {
     mrty_phone();
     return ob_get_clean();
 });
+
+add_shortcode('mrty_meta', function ($atts) {
+    if (empty($atts['key']))
+        return '';
+    global $post;
+    if (!$post)
+        return '';
+    return esc_html(get_post_meta($post->ID, $atts['key'], true));
+});
