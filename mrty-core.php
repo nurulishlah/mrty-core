@@ -20,5 +20,10 @@ require_once MRTY_CORE_PATH . 'inc/post-types/load.php';
 // Load Template Tags
 require_once MRTY_CORE_PATH . 'inc/template-tags.php';
 
+// Load Admin Settings
+if (is_admin()) {
+    require_once MRTY_CORE_PATH . 'inc/admin-settings.php';
+}
+
 // Load Shortcodes
 require_once MRTY_CORE_PATH . 'inc/shortcodes.php';
