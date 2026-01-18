@@ -17,5 +17,8 @@ define('MRTY_CORE_PATH', plugin_dir_path(__FILE__));
 // Load Post Types
 require_once MRTY_CORE_PATH . 'inc/post-types/load.php';
 
+// Load Template Tags
+require_once MRTY_CORE_PATH . 'inc/template-tags.php';
+
 // Load Shortcodes
 require_once MRTY_CORE_PATH . 'inc/shortcodes.php';
