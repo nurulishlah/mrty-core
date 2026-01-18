@@ -4,12 +4,14 @@
  * Using native WordPress Settings API
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * Register Menu Page
  */
-function mrty_add_admin_menu() {
+function mrty_add_admin_menu()
+{
     add_menu_page(
         __('MRTY Settings', 'mrty-core'),
         __('MRTY Settings', 'mrty-core'),
@@ -25,13 +27,14 @@ add_action('admin_menu', 'mrty_add_admin_menu');
 /**
  * Register Settings
  */
-function mrty_settings_init() {
+function mrty_settings_init()
+{
     register_setting('mrty_options', 'mrty_options');
 
     // Section 1: Profil Masjid
     add_settings_section(
         'mrty_section_profile',
-        __('Masque Profile', 'mrty-core'),
+        __('Mosque Profile', 'mrty-core'),
         'mrty_section_profile_cb',
         'mrty-settings'
     );
@@ -67,7 +70,7 @@ function mrty_settings_init() {
     add_settings_field('masjid_instagram', __('Instagram', 'mrty-core'), 'mrty_field_text_cb', 'mrty-settings', 'mrty_section_social', ['label_for' => 'masjid_instagram']);
     add_settings_field('masjid_youtube', __('YouTube', 'mrty-core'), 'mrty_field_text_cb', 'mrty-settings', 'mrty_section_social', ['label_for' => 'masjid_youtube']);
     add_settings_field('masjid_twitter', __('Twitter', 'mrty-core'), 'mrty_field_text_cb', 'mrty-settings', 'mrty_section_social', ['label_for' => 'masjid_twitter']);
-    
+
     // Section 4: Prayer Times
     add_settings_section(
         'mrty_section_prayer',
@@ -75,7 +78,7 @@ function mrty_settings_init() {
         'mrty_section_prayer_cb',
         'mrty-settings'
     );
-    
+
     add_settings_field('js_mode', __('Calculation Mode', 'mrty-core'), 'mrty_field_select_mode_cb', 'mrty-settings', 'mrty_section_prayer', ['label_for' => 'js_mode']);
     add_settings_field('city_id', __('City ID (MuslimPro)', 'mrty-core'), 'mrty_field_text_cb', 'mrty-settings', 'mrty_section_prayer', ['label_for' => 'city_id']);
     add_settings_field('idsholat_id', __('City ID (IDSholat)', 'mrty-core'), 'mrty_field_text_cb', 'mrty-settings', 'mrty_section_prayer', ['label_for' => 'idsholat_id']);
@@ -85,29 +88,34 @@ add_action('admin_init', 'mrty_settings_init');
 /**
  * Section Callbacks
  */
-function mrty_section_profile_cb($args) {
+function mrty_section_profile_cb($args)
+{
     echo '<p>' . __('Basic information about the mosque.', 'mrty-core') . '</p>';
 }
-function mrty_section_contact_cb($args) {
+function mrty_section_contact_cb($args)
+{
     echo '<p>' . __('Contact details and location.', 'mrty-core') . '</p>';
 }
-function mrty_section_social_cb($args) {
+function mrty_section_social_cb($args)
+{
     echo '<p>' . __('Social media links.', 'mrty-core') . '</p>';
 }
-function mrty_section_prayer_cb($args) {
+function mrty_section_prayer_cb($args)
+{
     echo '<p>' . __('Settings for the prayer times widget.', 'mrty-core') . '</p>';
 }
 
 /**
  * Field Callbacks
  */
-function mrty_field_text_cb($args) {
+function mrty_field_text_cb($args)
+{
     $options = get_option('mrty_options');
     $key = $args['label_for'];
-    
+
     // Get value from new option, fallback to legacy if empty and new option doesn't exist yet
     $val = isset($options[$key]) ? $options[$key] : '';
-    
+
     // If empty and not saved in new options yet, try legacy
     if ($val === '' && !isset($options[$key])) {
         $legacy_mods = get_option('theme_mods_wp-masjid');
@@ -119,7 +127,8 @@ function mrty_field_text_cb($args) {
     echo '<input type="text" id="' . esc_attr($key) . '" name="mrty_options[' . esc_attr($key) . ']" value="' . esc_attr($val) . '" class="regular-text">';
 }
 
-function mrty_field_textarea_cb($args) {
+function mrty_field_textarea_cb($args)
+{
     $options = get_option('mrty_options');
     $key = $args['label_for'];
     $val = isset($options[$key]) ? $options[$key] : '';
@@ -134,7 +143,8 @@ function mrty_field_textarea_cb($args) {
     echo '<textarea id="' . esc_attr($key) . '" name="mrty_options[' . esc_attr($key) . ']" rows="5" cols="50" class="large-text code">' . esc_textarea($val) . '</textarea>';
 }
 
-function mrty_field_select_mode_cb($args) {
+function mrty_field_select_mode_cb($args)
+{
     $options = get_option('mrty_options');
     $key = $args['label_for']; // js_mode
     $val = isset($options[$key]) ? $options[$key] : '';
@@ -145,7 +155,7 @@ function mrty_field_select_mode_cb($args) {
             $val = $legacy_mods[$key];
         }
     }
-    
+
     ?>
     <select id="<?php echo esc_attr($key); ?>" name="mrty_options[<?php echo esc_attr($key); ?>]">
         <option value="idsholat" <?php selected($val, 'idsholat'); ?>>ID Sholat (Manual/API)</option>
@@ -157,7 +167,8 @@ function mrty_field_select_mode_cb($args) {
 /**
  * Top Level Page Callback
  */
-function mrty_options_page_html() {
+function mrty_options_page_html()
+{
     if (!current_user_can('manage_options')) {
         return;
     }
